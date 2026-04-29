@@ -9,7 +9,7 @@ Base = declarative_base()
 class TravelPlan(Base):
 
     __tablename__ = 'travelplanner'
-
+# This model represents a travel plan created by a user. It includes details such as the destination, duration, start and end dates, and the status of the plan (confirmed or not).
     id= Column(Integer, primary_key = True)
     user_id= Column(Integer)
     destination= Column(String)
