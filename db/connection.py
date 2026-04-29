@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 from contextlib import contextmanager
 
 
-DATABASE_URL="postgresql://postgres:k4sh@L1014localhost:5432/TravelPlannerDB"
+DATABASE_URL = "postgresql://postgres:k4sh%40L1014@localhost:5432/TravelPlannerDB"
 
 engine = create_engine(DATABASE_URL)
 

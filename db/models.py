@@ -11,6 +11,7 @@ class TravelPlan(Base):
     __tablename__ = 'travelplanner'
 
     id= Column(Integer, primary_key = True)
+    user_id= Column(Integer)
     destination= Column(String)
     days= Column(Integer)
     start_date= Column(String)
@@ -23,6 +24,7 @@ class TravelPlan(Base):
     def to_dict(self):
         return {
             'id': self.id,
+            'user_id': self.user_id,
             'destination': self.destination,
             'days': self.days,
             'start_date': self.start_date,

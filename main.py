@@ -7,11 +7,11 @@ def main():
     init_db()
     agent = build_agent()
 
-    print("Welcome to the Travel Planner AI Agent! You can ask me to create, view, or update your travel plans. For example:")
+    print("\nWelcome to the Travel Planner AI Agent! You can ask me to create, view, or update your travel plans.\nType 'exit' or 'quit' to end the session.\n")
 
 
     while True:
-        user_input = input("You: ").strip()
+        user_input = input("\nYou: ").strip()
         if user_input.lower() in ["exit", "quit", "cls", "goodbye", "bye"]:
             print("Thank you for using the Travel Planner AI Agent. Safe travels!")
             break
@@ -21,10 +21,8 @@ def main():
             continue
 
         result = agent.run_sync(user_input)
-        print(f"Agent: {result.output}")
+        print(f"\nAgent: {result.output}")
 
 if __name__ == "__main__":
     load_dotenv()
     main()
-    
-

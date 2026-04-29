@@ -3,11 +3,8 @@ from agent.travel_tools import define_travel_tools
 from pydantic_ai.models.groq import GroqModel
 
 
-model_name = "meta-llama/llama-4-scout-17b-16e-instruct"
-def build_agent(model_name: str = "meta-llama/llama-4-scout-17b-16e-instruct") -> Agent:
-    agent = Agent(GroqModel(model_name),
 
-                  """
+SYSTEM_PROMPT = ("""
                   You are a Professional Travel Planner AI Agent.
 
                     Your role is to help users plan trips by creating clear, practical, and personalized day-wise travel itineraries based on their destination, trip duration, budget, travel style, and preferences.
@@ -72,6 +69,9 @@ def build_agent(model_name: str = "meta-llama/llama-4-scout-17b-16e-instruct") -
                     6. Keep recommendations useful, practical, and traveler-friendly
                     7. Respond clearly in structured format
                     8. Do not provide vague generic plans—make them destination-specific
+                    9. Always focus on creating a great travel experience for the user
+                    10.  DO NOT delete plans unless the user explicitly asks to "delete" or "remove" a plan. If the user says "I have no idea", simply ask clarifying questions. Do not assume previous plans should be deleted.
+                    11.You must use the Python tools available to you. Do NOT output XML tags like <function=...> or <tool=...> in your text response. Use the tools normally.
 
                     Behavior:
 
@@ -101,5 +101,8 @@ def build_agent(model_name: str = "meta-llama/llama-4-scout-17b-16e-instruct") -
                     """
                     )
     
-    agent.add_tools(define_travel_tools())
+def build_agent(model_name: str = "llama-3.1-8b-instant") -> Agent:
+    model = GroqModel(model_name)
+    agent = Agent(model, system_prompt=SYSTEM_PROMPT)
+    define_travel_tools(agent)
     return agent
