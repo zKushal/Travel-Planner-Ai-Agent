@@ -14,8 +14,7 @@ class TravelPlan(Base):
     user_id= Column(Integer)
     destination= Column(String)
     days= Column(Integer)
-    start_date= Column(String)
-    end_date= Column(String)
+    plan_details= Column(String)
     status= Column(Boolean)
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
 )
@@ -27,8 +26,7 @@ class TravelPlan(Base):
             'user_id': self.user_id,
             'destination': self.destination,
             'days': self.days,
-            'start_date': self.start_date,
-            'end_date': self.end_date,
+            'plan_details': self.plan_details,
             'status': self.status,
             'created_at': self.created_at
         }

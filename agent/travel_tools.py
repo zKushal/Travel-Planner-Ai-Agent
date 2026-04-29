@@ -9,7 +9,7 @@ from db.connection import get_session
 def define_travel_tools(agent: Agent) -> None:
 
     @agent.tool_plain
-    def create_plan(user_id: int, destination: str, days: int, start_date: str, end_date: str, status: bool) -> Dict: # means the plan is not yet confirmed
+    def create_plan(user_id: int, destination: str, days: int, plan_details:str, status: bool = False) -> Dict: # means the plan is not yet confirmed
         """Creates a travel plan for the user and stores it in the database."""
 
         with get_session() as session:
@@ -17,9 +17,8 @@ def define_travel_tools(agent: Agent) -> None:
                 user_id=user_id,
                 destination=destination,
                 days=days,
-                start_date=start_date,
-                end_date=end_date,
-                status=status
+                plan_details = plan_details,
+                status=status,
             )
             session.add(new_plan)
             session.commit()
@@ -27,22 +26,21 @@ def define_travel_tools(agent: Agent) -> None:
             return new_plan.to_dict()
         
     @agent.tool_plain
-    def view_plans(user_id: int) -> List[Dict]: #means it will return a list of all the travel plans for the user based on the user id
-        """Retrieves all travel plans for the user from the database."""
+    def view_plans(user_id: int, limit: int = 1) -> List[Dict]:
+        """Retrieves the most recent travel plans for the user (defaults to the latest 1 plan)."""
 
         with get_session() as session:
-
-            plans = session.query(TravelPlan).filter(TravelPlan.user_id == user_id).all()
+            plans = session.query(TravelPlan).filter(TravelPlan.user_id == user_id).order_by(TravelPlan.id.desc()).limit(limit).all()
             return [plan.to_dict() for plan in plans]
         
 
     @agent.tool_plain
     def update_plan(plan_id: int, 
                     destination: str = None, 
-                    days: int = None, 
-                    start_date: str = None, 
-                    end_date: str = None, 
+                    days: int = None,
+                    plan_details:str = None, 
                     status: bool = None) -> Dict: # means it will update the travel plan based on the plan id
+        
         """Updates an existing travel plan in the database."""
 
         with get_session() as session:
@@ -54,12 +52,11 @@ def define_travel_tools(agent: Agent) -> None:
                 plan.destination = destination
             if days:
                 plan.days = days
-            if start_date:
-                plan.start_date = start_date
-            if end_date:
-                plan.end_date = end_date
+            if plan_details is not None:
+                plan.plan_details = plan_details
             if status is not None:
                 plan.status = status
+
             session.commit()
             session.refresh(plan)
             return plan.to_dict()
