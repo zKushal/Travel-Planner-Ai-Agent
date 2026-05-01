@@ -6,6 +6,7 @@ from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
 
+# used to define the structure of the travel plan table in the database and to provide a method for converting the plan data into a dictionary format for easy manipulation and retrieval.
 class TravelPlan(Base):
 
     __tablename__ = 'travelplanner'

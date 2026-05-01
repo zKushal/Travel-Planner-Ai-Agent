@@ -12,6 +12,7 @@ def define_travel_tools(agent: Agent) -> None:
     def create_plan(user_id: int, destination: str, days: int, plan_details:str, status: bool = False) -> Dict: # means the plan is not yet confirmed
         """Creates a travel plan for the user and stores it in the database."""
 
+# This function takes the user ID, destination, number of days, plan details, and status as input. It creates a new travel plan in the database and returns the details of the created plan as a dictionary.
         with get_session() as session:
             new_plan = TravelPlan(
                 user_id=user_id,
@@ -39,7 +40,7 @@ def define_travel_tools(agent: Agent) -> None:
                     destination: str = None, 
                     days: int = None,
                     plan_details:str = None, 
-                    status: bool = None) -> Dict: # means it will update the travel plan based on the plan id
+                    status: bool = None) -> Dict:
         
         """Updates an existing travel plan in the database."""
 
