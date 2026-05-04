@@ -1,7 +1,11 @@
 from dotenv import load_dotenv
 from agent.system_prompt import build_agent
-from datetime import datetime, timezone
-from db.connection import init_db, get_session
+from db.connection import init_db
+
+load_dotenv()
+
+    
+
 
 def main():
     init_db()

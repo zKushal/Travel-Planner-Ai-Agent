@@ -1,8 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime
-from sqlalchemy.orm import declarative_base
 from datetime import datetime, timezone
-
-from sqlalchemy.orm import declarative_base
+from db.connection import Base
+from sqlalchemy.orm import sessionmaker, declarative_base
 
 Base = declarative_base()
 
